@@ -32,5 +32,4 @@ def upload_object(file_path: str, object_key: str):
         return response
     except Exception as e:
         logging.error(e)
-        print(f'ERROR: {e}')
         return None
