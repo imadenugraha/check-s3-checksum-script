@@ -26,12 +26,12 @@ def create_session():
         return None
 
     try:
-        aws_session = Session(
+        session = Session(
             aws_access_key_id=access_key,
             aws_secret_access_key=secret_key,
             region_name=region,
         )
-        return aws_session
+        return session
 
     except NoCredentialsError as no_cred:
         logging.error(no_cred)
