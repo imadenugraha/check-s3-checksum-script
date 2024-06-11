@@ -23,11 +23,11 @@ def upload_object(file_path: str, object_key: str):
     md5_file = calculate_md5(file_path)
 
     try:
-        logger.info(f"Upload {file_path} to S3 starting...")
+        logger.info(f"Upload {file_path} to bucket {bucket} starting...")
         with open(file_path, 'rb') as f_data:
             response = s3.Object(bucket_name=bucket, key=object_key).put(Body=f_data, ContentMD5=md5_file)
 
-        logger.info(f"Upload {file_path} to S3 finished!")
+        logger.info(f"Upload {file_path} to bucket {bucket} finished!")
         return response
     except Exception as e:
         logger.error(e)
