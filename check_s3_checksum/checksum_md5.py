@@ -1,4 +1,5 @@
 import hashlib
+import base64
 
 
 def calculate_md5(file_path: str) -> str:
@@ -8,4 +9,8 @@ def calculate_md5(file_path: str) -> str:
         while chunk := f.read(8192):
             md5.update(chunk)
     
-    return md5.hexdigest()
+    digest = md5.digest()
+    
+    md5_base64 = base64.b64encode(digest).decode('utf-8')
+    
+    return md5_base64
