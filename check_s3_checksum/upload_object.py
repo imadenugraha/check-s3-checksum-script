@@ -1,13 +1,16 @@
 import logging
 import os
-import hashlib
 
 from check_s3_checksum.create_session import create_session
+from check_s3_checksum.checksum_md5 import calculate_md5
 from dotenv import load_dotenv
 
-logging.basicConfig(
-    level=logging.ERROR, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    handlers=[logging.FileHandler('output.log'),
+                              logging.StreamHandler()])
+
+logger = logging.getLogger(__name__)
 
 
 def upload_object(file_path: str, object_key: str):
@@ -17,19 +20,15 @@ def upload_object(file_path: str, object_key: str):
 
     s3 = create_session().resource('s3')
 
-    md5 = hashlib.md5()
-
-    with open(file_path, 'rb') as f:
-        while chunk := f.read(8192):
-            md5.update(chunk)
-    
-    md5_file = md5.hexdigest()
+    md5_file = calculate_md5(file_path)
 
     try:
+        logger.info(f"Upload {file_path} to S3 starting...")
         with open(file_path, 'rb') as f_data:
             response = s3.Object(bucket_name=bucket, key=object_key).put(Body=f_data, ContentMD5=md5_file)
 
+        logger.info(f"Upload {file_path} to S3 finished!")
         return response
     except Exception as e:
-        logging.error(e)
+        logger.error(e)
         return None
