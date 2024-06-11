@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 def upload_object(file_path: str, object_key: str):
     load_dotenv('.env')
-
     bucket = os.getenv('AWS_BUCKET_NAME')
 
     s3 = create_session().resource('s3')
