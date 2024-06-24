@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "check-s3-checksum"
 version = "0.1.0"
-description = ""
+description = "Upload files to S3 and check their MD5 checksum using ContentMD5 metadata"
 authors = ["I Made Nugrahe Jaye Putra <imadenugraha@gmail.com>"]
 readme = "README.md"
 
