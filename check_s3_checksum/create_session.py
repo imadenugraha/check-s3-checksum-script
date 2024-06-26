@@ -13,8 +13,8 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger(__name__)
 
 
-def create_session() -> Session:
-    load_dotenv(".env")
+def create_session() -> Session|None:
+    load_dotenv()
 
     access_key = getenv("AWS_ACCESS_KEY")
     secret_key = getenv("AWS_SECRET_KEY")
