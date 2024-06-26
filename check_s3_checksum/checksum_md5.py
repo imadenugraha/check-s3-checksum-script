@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger(__name__)
 
 
-def calculate_md5(file_path: str) -> str:
+def calculate_md5(file_path: str) -> str|None:
     md5 = hashlib.md5()
     
     try:
